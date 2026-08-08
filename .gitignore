@@ -1,0 +1,21 @@
+# dependencies
+/node_modules
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# generated
+next-env.d.ts
+tsconfig.tsbuildinfo
+
+# misc
+.DS_Store
+dev.log
+.playwright-mcp/
+
+# env
+.env*
