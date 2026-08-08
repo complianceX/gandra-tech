@@ -19,7 +19,10 @@ export default function ScrollThread() {
     let len = 0
 
     const build = () => {
-      const h = document.documentElement.scrollHeight
+      // A altura do traço é a do <main> (pai), não a do documento —
+      // medir o documento faria o SVG vazar além do rodapé.
+      const parent = svg.parentElement
+      const h = parent ? parent.scrollHeight : document.documentElement.scrollHeight
       const w = window.innerWidth
       // Lateral esquerda no desktop, direita no mobile.
       const x = w < 768 ? w * 0.92 : w * 0.05

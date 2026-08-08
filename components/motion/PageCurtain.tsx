@@ -42,7 +42,7 @@ export default function PageCurtain() {
     const sweepOut = (delay = 0) => {
       sweep.b = 0
       drawExit()
-      gsap.timeline({ delay })
+      gsap.timeline({ delay, onStart: () => window.dispatchEvent(new Event('gt:curtain-open')) })
         .fromTo(
           panel,
           { yPercent: 0 },
