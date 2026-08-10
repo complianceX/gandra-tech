@@ -126,8 +126,11 @@ export default function Manifesto() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="manifesto">
-      <div className="container">
+    <section ref={sectionRef} className="manifesto stack-card">
+      {/* data-stack-inner: o encolhimento do CardStack acontece só no
+          conteúdo — o fundo claro da seção segue full-bleed e não aparece
+          fresta cinza (card escurecido) contra a página clara. */}
+      <div className="container" data-stack-inner>
         <WordReveal
           as="h2"
           className="manifesto__title"
@@ -143,7 +146,7 @@ export default function Manifesto() {
           <ImageFill
             src="/images/manifesto/campo.png"
             alt="Operação em campo"
-            sizes="(min-width: 640px) 520px, 100vw"
+            sizes="(min-width: 640px) 760px, 100vw"
             fallback={
               <div className="manifesto__photo-placeholder">
                 <span className="placeholder-label">foto — operação em campo</span>

@@ -11,12 +11,21 @@ export default function CustomCursor() {
     const ring = ringRef.current
     if (!dot || !ring) return
 
+    // Escondidos até o primeiro movimento do mouse — evita o anel parado
+    // no canto superior esquerdo antes de qualquer interação.
+    gsap.set([dot, ring], { autoAlpha: 0 })
+    let revealed = false
+
     const xDot = gsap.quickTo(dot, 'x', { duration: 0.08, ease: 'power3' })
     const yDot = gsap.quickTo(dot, 'y', { duration: 0.08, ease: 'power3' })
     const xRing = gsap.quickTo(ring, 'x', { duration: 0.38, ease: 'power3' })
     const yRing = gsap.quickTo(ring, 'y', { duration: 0.38, ease: 'power3' })
 
     const onMove = (e: MouseEvent) => {
+      if (!revealed) {
+        revealed = true
+        gsap.to([dot, ring], { autoAlpha: 1, duration: 0.3 })
+      }
       xDot(e.clientX)
       yDot(e.clientY)
       xRing(e.clientX)

@@ -55,13 +55,17 @@ export default function HeroParticles() {
       const octx = off.getContext('2d')
       if (!octx) return []
 
-      const fontSize = Math.min(w * 0.22, h * 0.36)
+      // No mobile o nome sobe para o terço superior e encolhe — no centro
+      // ele colidia com o título e o subtítulo.
+      const isSmall = w < 768
+      const fontSize = isSmall ? w * 0.17 : Math.min(w * 0.22, h * 0.36)
+      const centerY = isSmall ? h * 0.3 : h / 2
       octx.font = `700 ${fontSize}px Inter, system-ui, sans-serif`
       octx.textAlign = 'center'
       octx.textBaseline = 'middle'
       octx.fillStyle = '#fff'
-      octx.fillText('GANDRA', w / 2, h / 2 - fontSize * 0.55)
-      octx.fillText('TECH', w / 2, h / 2 + fontSize * 0.55)
+      octx.fillText('GANDRA', w / 2, centerY - fontSize * 0.55)
+      octx.fillText('TECH', w / 2, centerY + fontSize * 0.55)
 
       const data = octx.getImageData(0, 0, w, h).data
       const gap = Math.max(5, Math.round(w / 260))
@@ -129,9 +133,12 @@ export default function HeroParticles() {
 
     let raf = 0
     const tick = () => {
-      // Véu de fade generoso: rastro curto sem borrar o texto formado.
+      // Rastro transparente: apagar uma fração do frame anterior em vez de
+      // pintar preto por cima — um véu opaco cobriria o blob WebGL abaixo.
+      ctx.globalCompositeOperation = 'destination-out'
       ctx.fillStyle = 'rgba(0,0,0,0.32)'
       ctx.fillRect(0, 0, w, h)
+      ctx.globalCompositeOperation = 'source-over'
 
       for (const p of parts) {
         // Onda de chegada: cada partícula espera a sua vez de partir.

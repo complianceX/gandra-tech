@@ -9,6 +9,7 @@ import MagneticButton from '@/components/motion/MagneticButton'
 import ScrambleText from '@/components/motion/ScrambleText'
 import ImageFill from '@/components/motion/ImageFill'
 import DrawArrow from '@/components/motion/DrawArrow'
+import Dissolve from '@/components/motion/Dissolve'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -43,8 +44,11 @@ export default function FeaturedProduct() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="featured">
-      <div className="container">
+    <section ref={sectionRef} className="featured stack-card">
+      {/* data-stack-inner: o encolhimento do CardStack acontece só no
+          conteúdo — o fundo claro da seção segue full-bleed e não aparece
+          fresta cinza (card escurecido) contra a página clara. */}
+      <div className="container" data-stack-inner>
         <div className="section-label">
           <ScrambleText text="01 / PRODUTO EM DESTAQUE" speed={2} />
           <span>2026</span>
@@ -53,16 +57,18 @@ export default function FeaturedProduct() {
           <div className="featured__mockup">
             <div ref={mockupWrapRef} className="featured__mockup-hover" style={{ opacity: 0 }}>
               <div className="featured__mockup-image">
-                <ImageFill
-                  src="/images/featured/sgs-panel.png"
-                  alt="Screenshot do painel SGS"
-                  sizes="(min-width: 1400px) 900px, (min-width: 768px) 60vw, 100vw"
-                  quality={95}
-                  objectFit="contain"
-                  objectPosition="center"
-                  priority
-                  fallback={<span className="placeholder-label">screenshot do painel SGS</span>}
-                />
+                <Dissolve>
+                  <ImageFill
+                    src="/images/featured/sgs-panel.png"
+                    alt="Screenshot do painel SGS"
+                    sizes="(min-width: 1400px) 900px, (min-width: 768px) 60vw, 100vw"
+                    quality={95}
+                    objectFit="contain"
+                    objectPosition="center"
+                    priority
+                    fallback={<span className="placeholder-label">screenshot do painel SGS</span>}
+                  />
+                </Dissolve>
               </div>
             </div>
           </div>

@@ -5,6 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import WordReveal from '@/components/motion/WordReveal'
 import FadeIn from '@/components/motion/FadeIn'
 import HeroParticles from '@/components/motion/HeroParticles'
+import HeroBlob from '@/components/motion/HeroBlob'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -77,7 +78,8 @@ export default function Hero() {
     const setters = words.map((el) => ({
       el,
       x: gsap.quickTo(el, 'x', { duration: 0.6, ease: 'power3.out' }),
-      s: gsap.quickTo(el, 'scale', { duration: 0.6, ease: 'power3.out' }),
+      sx: gsap.quickTo(el, 'scaleX', { duration: 0.6, ease: 'power3.out' }),
+      sy: gsap.quickTo(el, 'scaleY', { duration: 0.6, ease: 'power3.out' }),
     }))
 
     const RADIUS = 220
@@ -90,10 +92,12 @@ export default function Hero() {
         if (d < RADIUS) {
           const f = 1 - d / RADIUS
           it.x(-dx * 0.14 * f)
-          it.s(1 + 0.07 * f)
+          it.sx(1 + 0.07 * f)
+          it.sy(1 + 0.07 * f)
         } else {
           it.x(0)
-          it.s(1)
+          it.sx(1)
+          it.sy(1)
         }
       }
     }
@@ -107,9 +111,14 @@ export default function Hero() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="hero">
-      <HeroParticles />
-      <div className="container hero__container">
+    <section ref={sectionRef} className="hero stack-card">
+      {/* Tudo que encolhe no efeito de cartas vive dentro de hero__inner:
+          a seção fica preta full-bleed, então as frestas laterais durante
+          o encolhimento não revelam o fundo claro da página. */}
+      <div data-stack-inner className="hero__inner">
+        <HeroBlob />
+        <HeroParticles />
+        <div className="container hero__container">
         <FadeIn
           as="div"
           className="hero__meta"
@@ -153,7 +162,8 @@ export default function Hero() {
         </div>
       </div>
 
-      <div ref={lineRef} className="hero__line" />
+        <div ref={lineRef} className="hero__line" />
+      </div>
     </section>
   )
 }

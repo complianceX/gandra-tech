@@ -7,6 +7,7 @@ import Manifesto from '@/components/sections/Manifesto'
 import Contact from '@/components/sections/Contact'
 import Marquee from '@/components/motion/Marquee'
 import ScrollThread from '@/components/motion/ScrollThread'
+import CardStack from '@/components/motion/CardStack'
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <Header />
       <main>
         <ScrollThread />
+        <CardStack />
         <Hero />
         <Marquee />
         <FeaturedProduct />
