@@ -12,9 +12,11 @@
 next-env.d.ts
 tsconfig.tsbuildinfo
 
+# logs
+*.log
+
 # misc
 .DS_Store
-dev.log
 .playwright-mcp/
 
 # env
